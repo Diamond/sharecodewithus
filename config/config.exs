@@ -28,7 +28,3 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
-config :ueberauth, Ueberauth,
-  providers: [
-    github: { Ueberauth.Strategy.Github, [] }
-  ]

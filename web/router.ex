@@ -18,7 +18,6 @@ defmodule Treeshare.Router do
 
     get "/", PageController, :index
     resources "/snippets", SnippetController
-    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
