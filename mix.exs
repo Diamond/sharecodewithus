@@ -19,7 +19,7 @@ defmodule Treeshare.Mixfile do
   def application do
     [mod: {Treeshare, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ueberauth]]
+                    :phoenix_ecto, :postgrex]]
   end
 
   # Specifies which paths to compile per environment.

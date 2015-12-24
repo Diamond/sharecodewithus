@@ -17,10 +17,9 @@ $(function() {
   editor.getSession().setTabSize(2);
   editor.setReadOnly(true);
   editor.resize();
-  editor.setValue($("#snippet-body").val());
+  editor.setValue($("#snippet-body").val(), 1);
 });
 </script>
 <br>
 
-<%= link "Edit", to: snippet_path(@conn, :edit, @snippet) %>
 <%= link "Back", to: snippet_path(@conn, :index) %>

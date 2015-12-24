@@ -39,7 +39,7 @@ $(function() {
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);
   editor.resize();
-  editor.setValue($("#snippet-body").val());
+  editor.setValue($("#snippet-body").val(), -1);
 
   $("form").on("submit", function(event) {
     var form = this;

@@ -1,1 +1,21 @@
+<div class="jumbotron">
+  <h1>Welcome to sharecodewith.us!</h1>
+  <p>Currently, sharecodewith.us is a repository for sharing Elm code! We'll be adding future support for other languages, live coding sessions, and live code reviews!</p>
+  <p>
+    <%= link "Get Started!", to: snippet_path(@conn, :new), class: "btn btn-primary btn-lg" %>
+  </p>
+</div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">Tentative Feature Roadmap</div>
+  <div class="panel-body">
+    <ul>
+      <li>Support for more languages!</li>
+      <li>Live code editing/watching</li>
+      <li>Live code reviews</li>
+      <li>User accounts/vanity URLs</li>
+      <li>Live Preview</li>
+      <li>Snippet Chat</li>
+    </ul>
+  </div>
+</div>
