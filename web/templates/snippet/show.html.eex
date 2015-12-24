@@ -1,0 +1,26 @@
+<h2><%= @snippet.title %></h2>
+<%= if @snippet.public, do: "Public", else: "Private" %>
+<br>
+<input type="hidden" id="snippet-body" value="<%= @snippet.body %>"/>
+<div id="editor">
+</div>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/mode-elm.js"></script>
+<script>
+$(function() {
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/xcode");
+  editor.getSession().setMode("ace/mode/elm");
+  editor.getSession().setUseSoftTabs(true);
+  editor.getSession().setTabSize(2);
+  editor.setReadOnly(true);
+  editor.resize();
+  editor.setValue($("#snippet-body").val());
+});
+</script>
+<br>
+
+<%= link "Edit", to: snippet_path(@conn, :edit, @snippet) %>
+<%= link "Back", to: snippet_path(@conn, :index) %>
