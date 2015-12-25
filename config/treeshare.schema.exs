@@ -1,174 +1,229 @@
+@moduledoc """
+A schema is a keyword list which represents how to map, transform, and validate
+configuration values parsed from the .conf file. The following is an explanation of
+each key in the schema definition in order of appearance, and how to use them.
+
+## Import
+
+A list of application names (as atoms), which represent apps to load modules from
+which you can then reference in your schema definition. This is how you import your
+own custom Validator/Transform modules, or general utility modules for use in
+validator/transform functions in the schema. For example, if you have an application
+`:foo` which contains a custom Transform module, you would add it to your schema like so:
+
+`[ import: [:foo], ..., transforms: ["myapp.some.setting": MyApp.SomeTransform]]`
+
+## Extends
+
+A list of application names (as atoms), which contain schemas that you want to extend
+with this schema. By extending a schema, you effectively re-use definitions in the
+extended schema. You may also override definitions from the extended schema by redefining them
+in the extending schema. You use `:extends` like so:
+
+`[ extends: [:foo], ... ]`
+
+## Mappings
+
+Mappings define how to interpret settings in the .conf when they are translated to
+runtime configuration. They also define how the .conf will be generated, things like
+documention, @see references, example values, etc.
+
+See the moduledoc for `Conform.Schema.Mapping` for more details.
+
+## Transforms
+
+Transforms are custom functions which are executed to build the value which will be
+stored at the path defined by the key. Transforms have access to the current config
+state via the `Conform.Conf` module, and can use that to build complex configuration
+from a combination of other config values.
+
+See the moduledoc for `Conform.Schema.Transform` for more details and examples.
+
+## Validators
+
+Validators are simple functions which take two arguments, the value to be validated,
+and arguments provided to the validator (used only by custom validators). A validator
+checks the value, and returns `:ok` if it is valid, `{:warn, message}` if it is valid,
+but should be brought to the users attention, or `{:error, message}` if it is invalid.
+
+See the moduledoc for `Conform.Schema.Validator` for more details and examples.
+"""
 [
+  extends: [],
+  import: [],
   mappings: [
     "treeshare.Elixir.Treeshare.Endpoint.url.host": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.url.host here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.url.host",
+      commented: false,
       datatype: :binary,
-      default: "localhost"
+      default: "sharecodewith.us",
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.url.host here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.url.host"
+    ],
+    "treeshare.Elixir.Treeshare.Endpoint.url.port": [
+      commented: false,
+      datatype: :integer,
+      default: 8001,
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.url.port here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.url.port"
     ],
     "treeshare.Elixir.Treeshare.Endpoint.root": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.root here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.root",
+      commented: false,
       datatype: :binary,
-      default: "/Users/brichey/Documents/dev/phoenix/treeshare"
+      default: "/home/brandon/apps/sharecodewithus",
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.root here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.root"
     ],
     "treeshare.Elixir.Treeshare.Endpoint.secret_key_base": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.secret_key_base here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.secret_key_base",
+      commented: false,
       datatype: :binary,
-      default: "AcSOSPlupyx7oCP4ZMH1ivmiUhZqAfXlMOpCiYNvRti9YfpMLu52vShMd5N9gLxq"
+      default: "qfxJ0/S0yXHCOfyUlbYIix4zPRGf5SJJr3x+z/J7lNF62dIQm1mb7CgwVkMb8BFa",
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.secret_key_base here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.secret_key_base"
     ],
     "treeshare.Elixir.Treeshare.Endpoint.render_errors.accepts": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.render_errors.accepts here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.render_errors.accepts",
+      commented: false,
       datatype: [
         list: :binary
       ],
       default: [
         "html",
         "json"
-      ]
+      ],
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.render_errors.accepts here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.render_errors.accepts"
     ],
     "treeshare.Elixir.Treeshare.Endpoint.pubsub.name": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.pubsub.name here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.pubsub.name",
+      commented: false,
       datatype: :atom,
-      default: Treeshare.PubSub
+      default: Treeshare.PubSub,
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.pubsub.name here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.pubsub.name"
     ],
     "treeshare.Elixir.Treeshare.Endpoint.pubsub.adapter": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.pubsub.adapter here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.pubsub.adapter",
+      commented: false,
       datatype: :atom,
-      default: Phoenix.PubSub.PG2
+      default: Phoenix.PubSub.PG2,
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.pubsub.adapter here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.pubsub.adapter"
     ],
     "treeshare.Elixir.Treeshare.Endpoint.http.port": [
+      commented: false,
+      datatype: {:atom, :binary},
+      default: {:system, "PORT"},
       doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.http.port here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.http.port",
-      datatype: :integer,
-      default: 4000
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.http.port"
     ],
-    "treeshare.Elixir.Treeshare.Endpoint.debug_errors": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.debug_errors here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.debug_errors",
+    "treeshare.Elixir.Treeshare.Endpoint.cache_static_manifest": [
+      commented: false,
+      datatype: :binary,
+      default: "priv/static/manifest.json",
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.cache_static_manifest here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.cache_static_manifest"
+    ],
+    "treeshare.Elixir.Treeshare.Endpoint.server": [
+      commented: false,
       datatype: :atom,
-      default: true
-    ],
-    "treeshare.Elixir.Treeshare.Endpoint.code_reloader": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.code_reloader here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.code_reloader",
-      datatype: :atom,
-      default: true
-    ],
-    "treeshare.Elixir.Treeshare.Endpoint.cache_static_lookup": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.cache_static_lookup here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.cache_static_lookup",
-      datatype: :atom,
-      default: false
-    ],
-    "treeshare.Elixir.Treeshare.Endpoint.check_origin": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.check_origin here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.check_origin",
-      datatype: :atom,
-      default: false
-    ],
-    "treeshare.Elixir.Treeshare.Endpoint.watchers.node": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.watchers.node here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.watchers.node",
-      datatype: [
-        list: :binary
-      ],
-      default: [
-        "node_modules/brunch/bin/brunch",
-        "watch",
-        "--stdin"
-      ]
-    ],
-    "treeshare.Elixir.Treeshare.Endpoint.live_reload.patterns": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.live_reload.patterns here.",
-      to: "treeshare.Elixir.Treeshare.Endpoint.live_reload.patterns",
-      datatype: [
-        list: :binary
-      ],
-      default: [
-        %{__struct__: Regex, opts: "", re_pattern: {:re_pattern, 1, 0, 0, <<69, 82, 67, 80, 166, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 112, 0, 47, 0, 0, 0, 1, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...>>}, source: "priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$"},
-        %{__struct__: Regex, opts: "", re_pattern: {:re_pattern, 1, 0, 0, <<69, 82, 67, 80, 112, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 112, 0, 111, 0, 0, 0, 1, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...>>}, source: "priv/gettext/.*(po)$"},
-        %{__struct__: Regex, opts: "", re_pattern: {:re_pattern, 1, 0, 0, <<69, 82, 67, 80, 106, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 119, 0, 120, 0, 0, 0, 1, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...>>}, source: "web/views/.*(ex)$"},
-        %{__struct__: Regex, opts: "", re_pattern: {:re_pattern, 1, 0, 0, <<69, 82, 67, 80, 116, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 119, 0, 120, 0, 0, 0, 1, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...>>}, source: "web/templates/.*(eex)$"}
-      ]
+      default: true,
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Endpoint.server here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Endpoint.server"
     ],
     "treeshare.Elixir.Treeshare.Repo.adapter": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.adapter here.",
-      to: "treeshare.Elixir.Treeshare.Repo.adapter",
+      commented: false,
       datatype: :atom,
-      default: Ecto.Adapters.Postgres
+      default: Ecto.Adapters.Postgres,
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.adapter here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Repo.adapter"
     ],
     "treeshare.Elixir.Treeshare.Repo.username": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.username here.",
-      to: "treeshare.Elixir.Treeshare.Repo.username",
+      commented: false,
       datatype: :binary,
-      default: "postgres"
+      default: "sharecodewithus",
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.username here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Repo.username"
     ],
     "treeshare.Elixir.Treeshare.Repo.password": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.password here.",
-      to: "treeshare.Elixir.Treeshare.Repo.password",
+      commented: false,
       datatype: :binary,
-      default: "postgres"
+      default: "5h4r1ng15c4r1ng",
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.password here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Repo.password"
     ],
     "treeshare.Elixir.Treeshare.Repo.database": [
+      commented: false,
+      datatype: :binary,
+      default: "sharecodewithus",
       doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.database here.",
-      to: "treeshare.Elixir.Treeshare.Repo.database",
-      datatype: :binary,
-      default: "treeshare_dev"
-    ],
-    "treeshare.Elixir.Treeshare.Repo.hostname": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.hostname here.",
-      to: "treeshare.Elixir.Treeshare.Repo.hostname",
-      datatype: :binary,
-      default: "localhost"
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Repo.database"
     ],
     "treeshare.Elixir.Treeshare.Repo.pool_size": [
-      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.pool_size here.",
-      to: "treeshare.Elixir.Treeshare.Repo.pool_size",
+      commented: false,
       datatype: :integer,
-      default: 10
+      default: 20,
+      doc: "Provide documentation for treeshare.Elixir.Treeshare.Repo.pool_size here.",
+      hidden: false,
+      to: "treeshare.Elixir.Treeshare.Repo.pool_size"
     ],
     "logger.console.format": [
-      doc: "Provide documentation for logger.console.format here.",
-      to: "logger.console.format",
+      commented: false,
       datatype: :binary,
       default: """
-      [$level] $message
-      """
+      $time $metadata[$level] $message
+      """,
+      doc: "Provide documentation for logger.console.format here.",
+      hidden: false,
+      to: "logger.console.format"
     ],
     "logger.console.metadata": [
-      doc: "Provide documentation for logger.console.metadata here.",
-      to: "logger.console.metadata",
+      commented: false,
       datatype: [
         list: :atom
       ],
       default: [
         :request_id
-      ]
+      ],
+      doc: "Provide documentation for logger.console.metadata here.",
+      hidden: false,
+      to: "logger.console.metadata"
     ],
-    "phoenix.stacktrace_depth": [
-      doc: "Provide documentation for phoenix.stacktrace_depth here.",
-      to: "phoenix.stacktrace_depth",
-      datatype: :integer,
-      default: 20
+    "logger.level": [
+      commented: false,
+      datatype: :atom,
+      default: :info,
+      doc: "Provide documentation for logger.level here.",
+      hidden: false,
+      to: "logger.level"
     ],
     "phoenix.generators.migration": [
-      doc: "Provide documentation for phoenix.generators.migration here.",
-      to: "phoenix.generators.migration",
+      commented: false,
       datatype: :atom,
-      default: true
+      default: true,
+      doc: "Provide documentation for phoenix.generators.migration here.",
+      hidden: false,
+      to: "phoenix.generators.migration"
     ],
     "phoenix.generators.binary_id": [
-      doc: "Provide documentation for phoenix.generators.binary_id here.",
-      to: "phoenix.generators.binary_id",
+      commented: false,
       datatype: :atom,
-      default: false
+      default: false,
+      doc: "Provide documentation for phoenix.generators.binary_id here.",
+      hidden: false,
+      to: "phoenix.generators.binary_id"
     ]
   ],
-  translations: [
-  ]
+  transforms: [],
+  validators: []
 ]

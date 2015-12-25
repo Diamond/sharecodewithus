@@ -19,7 +19,7 @@ defmodule Treeshare.Mixfile do
   def application do
     [mod: {Treeshare, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :neotoma, :conform]]
   end
 
   # Specifies which paths to compile per environment.
@@ -32,13 +32,13 @@ defmodule Treeshare.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.0"},
      {:phoenix_ecto, "~> 2.0"},
-     {:postgrex, ">= 0.0.0"},
+     {:postgrex, "~> 0.10"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:exrm, "~> 0.19.9"},
-     {:conform, "~> 0.17"}]
+     {:exrm, "1.0.0-rc7"},
+     {:conform, "1.0.0-rc8"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
